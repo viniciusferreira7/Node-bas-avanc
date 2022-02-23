@@ -39,14 +39,21 @@ function createAccount() {
 
 function buildAccount() {
   inquirer.prompt([{
-    name: 'Account name',
+    name: 'accountName',
     message: 'Digite o nome sa sua conta:'
   }]).then((answer) => {
-    const account = answer['accountName']
-    console.info(account)
+    const accountName = answer['accountName']
+    console.info(accountName)
 
-    if (!fs.existsSync('account')) fs.mkdirSync('account')
-    if (!fs.existsSync(`account/${accountName}.json`)) console.log(chalk.bgRed.black('Está conta já existe, escolha outra nome'))
+    if (!fs.existsSync('accounts')) fs.mkdirSync('accounts')
+    if (fs.existsSync(`accounts/${accountName}.json`)) {
+      console.log(chalk.bgRed.black('Está conta já existe, escolha outro nome'))
+      buildAccount()
+      return
+    }
+
+    fs.writeFileSync(`accounts/${accountName}.json`, '{"balance":0}', (err) => console.log(err))
+    operation()
 
   }).catch((err) => console.log(err))
 }
