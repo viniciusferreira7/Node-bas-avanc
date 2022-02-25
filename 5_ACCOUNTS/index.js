@@ -108,13 +108,13 @@ function operation() {
   inquirer.prompt([{
     type: 'list',
     name: 'action',
-    message: 'O que você deseja fazer',
+    message: 'O que você deseja fazer ?',
     choices: [
       'Criar conta', 'Consultar saldo', 'Depositar', 'Saldo', 'Sair'
     ]
   }])
     .then((answer) => {
-      if (!createAccount()) fs.m
+      if (!createAccount()) return fs.writeFileSync('accounts',)
     })
     .catch((err) => console.log(err))
 }
@@ -127,7 +127,9 @@ function createAccount() {
     .then((answer) => {
       const accountName = answer['accountName']
 
-        (!fs.existsSync('accounts')) return fs.mkdirSync('accounts')
+        (!fs.existsSync('accounts')) return false
+
+      return true
     })
     .catch((err) => console.log(err))
 }
