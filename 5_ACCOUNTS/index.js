@@ -266,7 +266,7 @@ function operation() {
     else if (action === 'Depositar') deposit()
     else if (action === 'Consultar saldo') getBalance()
     else if (action === 'PIX') transfer()
-    else if (action === 'Sacar') { }
+    else if (action === 'Sacar') getAmount()
     else if (action === 'Sair') {
       console.log(chalk.bgGreen.black('Obrigado por utilizar o Accounts'))
     }
@@ -296,6 +296,7 @@ function buildAccount() {
       }
 
       fs.writeFileSync(`accounts/${accountName}.json`, '{"balance":0}')
+      operation()
 
     })
     .catch(err => {
@@ -334,7 +335,7 @@ function deposit() {
       }])
         .then(answer => {
           const amount = answer['amount']
-          if (amount !== Number) {
+          if (!amount) {
             console.log(chalk.bgRed.black('Ocorreu um erro tente novamente mais tarde'))
             return deposit()
           }
@@ -389,6 +390,7 @@ function getBalance() {
       const accountData = checkBalance(accountName)
 
       console.log(chalk.bgBlue.black(`Seu saldo atual é de R$${accountData.balance}`))
+      operation()
 
     })
     .catch(err => {
@@ -404,22 +406,106 @@ function transfer() {
     .then(answer => {
       const accountWithDraw = answer['accountWithDraw']
 
-      if (checkAccount(accountName)) {
+      if (checkAccount(accountWithDraw)) {
         console.log(chalk.bgRed.black('Está conta não existe!'))
         return transfer()
       }
 
+      whichAccount(accountWithDraw)
+
+    })
+}
+
+
+function whichAccount(accountWithDraw) {
+  inquirer.prompt([{
+    name: 'amount',
+    message: 'Qual quantidade você deseja retirar ?'
+  }]).then(answer => {
+    const amount = answer['amount']
+
+    withDraw(accountWithDraw, amount)
+  })
+    .catch(err => {
+      console.log(err)
     })
 }
 
 function withDraw(accountName, amount) {
   const accountData = checkBalance(accountName)
 
+  if (!amount) {
+    return operation()
+  }
+
   if (accountData.balance < amount) {
     console.log(chalk.bgRed.black('Saldo insuficiente, tente novamente mais tarde'))
     return operation()
   }
 
-  accountData.balance = parseFloat(accountData.balance) * parse
+  forWhichAccount(amount)
 
+  accountData.balance = parseFloat(accountData.balance) - parseFloat(amount)
+
+  fs.writeFileSync(`accounts/${accountName}.json`, JSON.stringify(accountData))
+
+  console.log(chalk.bgBlue.black(`Seu saldo atual e de R$${accountData.balance}`))
+
+}
+
+function forWhichAccount(amount) {
+  inquirer.prompt([{
+    name: 'accountDeposit',
+    message: 'Digite o nome da conta que você deseja transferir:'
+  }])
+    .then(answer => {
+      const accountDeposit = answer['accountDeposit']
+
+      if (checkAccount(accountDeposit)) {
+        console.log(chalk.bgRed.black('Está conta não existe!'))
+        return forWhichAccount()
+      }
+
+      const accountData = checkBalance(accountDeposit)
+
+      accountData.balance = parseFloat(accountData.balance) + parseFloat(amount)
+
+      fs.writeFileSync(`accounts/${accountDeposit}.json`, JSON.stringify(accountData))
+      console.log(chalk.bgGreen.black(`Foi transferido o valor de R$${amount} com sucesso para ${accountDeposit}`))
+      operation()
+
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+function getAmount() {
+  inquirer.prompt([{
+    name: 'accountGet',
+    message: 'Digite o nome da conta:'
+  }]).then(answer => {
+    const accountGet = answer['accountGet']
+
+    inquirer.prompt([{
+      name: 'amount',
+      message: 'Digite o valor:'
+    }])
+      .then(answer => {
+        const amount = answer['amount']
+
+        if (checkAccount(accountGet)) {
+          console.log(chalk.bgRed.black('Está conta não existe!'))
+          return forWhichAccount()
+        }
+
+        withDraw(accountGet, amount)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  })
+    .catch(err => {
+      console.log(err)
+    })
 }
