@@ -1,13 +1,21 @@
 const express = require('express')
 const app = express()
 
-const path = require('path')
-const pathBase = path.join(__dirname, 'templetes')
-
 const port = 3000
 
+const path = require('path')
+const basePath = path.join(__dirname, 'templetes')
+
+app.get('/user/:id', (req, res) => {
+  const id = req.params.id
+
+  console.log(`Buscando o usuário: ${id}`)
+
+  res.sendFile(`${basePath}/users.html`)
+})
+
 app.get('/', (req, res) => {
-  res.sendFile(`${pathBase}/index.html`)
+  res.sendFile(`${basePath}/index.html`)
 })
 
 app.listen(port, () => {
