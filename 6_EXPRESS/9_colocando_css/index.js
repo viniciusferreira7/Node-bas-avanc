@@ -10,6 +10,8 @@ const users = require('./users')
 
 app.use('/users', users)
 
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
   res.sendFile(`${basePath}/index.html`)
 })

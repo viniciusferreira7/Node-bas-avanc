@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.router
+const router = express.Router()
 
 const path = require('path')
 const basePath = path.join(__dirname, '../templetes')
@@ -9,6 +9,7 @@ router.use(express.urlencoded({
 }))
 
 router.use(express.json())
+
 
 router.get('/add', (req, res) => {
   res.sendFile(`${basePath}/userForm.html`)
