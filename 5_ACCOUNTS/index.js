@@ -500,6 +500,7 @@ function getAmount() {
         }
 
         withDraw(accountGet, amount)
+        operation()
       })
       .catch(err => {
         console.log(err)
