@@ -1,3 +1,18 @@
+// const express = require('express')
+// const exphbs = require('express-handlebars')
+// const app = express()
+
+// app.engine('handlebars', exphbs.engine())
+// app.set('view engine', 'handlebars')
+
+// app.get('/', (req, res) => {
+//   res.render('home', { layout: false })
+// })
+
+// app.listen(3000, () => {
+//   console.log('Servindo rodando')
+// })
+
 const express = require('express')
 const exphbs = require('express-handlebars')
 const app = express()
@@ -10,5 +25,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(3000, () => {
-  console.log('Servindo rodando')
+  console.log('Servidor funcionando')
 })
