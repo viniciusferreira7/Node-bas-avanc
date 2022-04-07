@@ -19,6 +19,6 @@ app.get('/', (req, res) => {
   res.render('home', { user, auth })
 })
 
-app.listen(3000, (req, res) => {
+app.listen(3000, () => {
   console.log('Servidor rodando')
 })
