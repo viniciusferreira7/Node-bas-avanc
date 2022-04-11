@@ -15,8 +15,9 @@ app.get('/', (req, res) => {
     name: 'vinicius',
     age: '21'
   }
+  const list = [1, 2, 3, 4, 5]
 
-  res.render('home', { user, auth })
+  res.render('home', { user, auth, list })
 })
 
 app.listen(3000, () => {
