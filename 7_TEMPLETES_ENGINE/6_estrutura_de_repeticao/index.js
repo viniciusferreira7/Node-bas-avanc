@@ -10,6 +10,7 @@ app.get('/dashboard', (req, res) => {
   res.render('dashboard', { itens })
 })
 
+
 app.get('/', (req, res) => {
   const auth = true
   const user = {
