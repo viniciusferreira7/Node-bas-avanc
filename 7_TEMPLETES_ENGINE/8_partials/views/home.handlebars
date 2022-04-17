@@ -1,0 +1,14 @@
+{{#if auth}}
+
+<h2>Seja bem-vindo</h2>
+<h4>{{user.name}}</h4>
+<p>Você já e nosso membro <a href="dashboard" rel="noopener noreferrer">click qui</a></p>
+
+{{else}}
+<h2>Usuário não encontrado...</h2>
+{{/if}}
+
+{{#with user}}
+<p>{{name}}</p>
+<p>{{age}}</p>
+{{/with}}
