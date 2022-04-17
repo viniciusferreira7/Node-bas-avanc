@@ -6,7 +6,7 @@ const hbs = exphbs.create({
   partialsDir: ['views/partials']
 })
 
-app.engine('handlebars', hbs.engine())
+app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 
 app.get('/dashboard', (req, res) => {
