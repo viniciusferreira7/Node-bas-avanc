@@ -49,7 +49,7 @@ app.get('/books/:id', (req,res) => {
 
   const sql = `SELECT * FROM books WHERE id = ${id}`
 
-  conn.connect(sql, (err, data) => {
+  conn.query(sql, (err, data) => {
     if(err) {
       console.log(err)
       return
