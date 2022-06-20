@@ -88,7 +88,7 @@ app.post('/books/updateBook', (req,res)=>{
   const title = req.body.title
   const pagesqty = req.body.pagesqty
 
-  const sql = `UPDATE books SET title = ${title}, pagesqty = ${pagesqty} WHERE id = ${id}`
+  const sql = `UPDATE books SET title = '${title}', pagesqty = '${pagesqty}' WHERE id = ${id}`
 
   conn.query(sql, (err, data) => {
     if(err){
