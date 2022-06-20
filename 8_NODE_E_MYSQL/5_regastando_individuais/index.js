@@ -31,24 +31,6 @@ app.post('/books/insertBook', (req, res)=>{
   })
 })
 
-app.post('/books/update/:id', (req, res) => {
-  const id = req.params.id
-  const title = req.body.title
-  const pagesqty = req.body.pagesqty
-  console.log(id)
-
-  const sql = `UPDATE books SET title = ${title} WHERE id = ${id}; UPDATE books SET pagesqty = ${pagesqty} WHERE id = ${id};`
-
-  
-  conn.query(sql, (err, data)=> {
-    const books = data
-
-    if(err) console.log(err)
-    console.log(books)
-    res.redirect(`/books`)
-  })
-})
-
 app.get('/books', (req, res) => {
 
   const sql = 'SELECT * FROM books'
@@ -97,6 +79,9 @@ app.get('/books/edit/:id', (req,res)=>{
 
     res.render('editBook',{book})
   })
+})
+
+
 })
 
 const conn = mysql.createConnection({
