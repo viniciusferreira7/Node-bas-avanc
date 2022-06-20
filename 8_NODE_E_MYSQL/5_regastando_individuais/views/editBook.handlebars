@@ -1,0 +1,13 @@
+<h1>Edite  seu livro</h1>
+<form class="form" action="/books/insertBook" method="post">
+  <div class="form-control">
+    <label for="title">Titulo:</label>
+    <input type="text" name="title" placeholder="Digite o nome do livro" value="{{book.title}}">
+  </div>
+  <div class="form-control">
+    <label for="pagesqty">Numero de páginas:</label>
+    <input type="number" name="pagesqty" placeholder="Qual e a quantidade de páginas do livros?" value="{{book.pagesqty}}">
+  </div>
+  <input type="submit" value="Editar">
+  <a href="/books">Ir para livros</a>
+</form>
